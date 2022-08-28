@@ -1,6 +1,7 @@
 from pathlib import Path
 from PIL import Image
 import sys
+import os
 
 # converting images found in a given directory to webp
 # this scripts takes two command line arguments
@@ -22,5 +23,7 @@ def main():
     for path in paths: 
         webp_path = convert_to_webp(path)
         print(webp_path)
+
+    os.system('echo ".' + imageExt + ' files in ' + imageDir + ' Converted" | terminal-notifier -title "Webp Converter" -message "' + imageExt + ' files in ' + imageDir + ' converted"')
 
 main()
