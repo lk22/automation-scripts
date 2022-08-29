@@ -20,7 +20,7 @@ fi
 
 for dir in $DIR; do
     if [ -d $dir ]; then
-        for repository in "$DIR"/*; do
+        for repository in "$DIR*"; do
             if [ -d $repository ]; then
                 cd $repository
                 
@@ -32,11 +32,14 @@ for dir in $DIR; do
                         cleanRepositories+=($repository) #adding clean repository to array
                     else
                         dirtyRepositories+=($repository) #adding dirty repository to array
+                        echo "$repository is dirty"
                     fi
                 fi
             fi
          done
-         if [ ${#dirtyRepositories[@]} == 0 ]; then
+         if [ ${#dirtyRepositories[0]} ]; then
+             echo "Dirty repositories: ${dirtyRepositories[0]}" | terminal-notifier -title "Git Status" -message "Dirty repositories: ${dirtyRepositories[@]}" -sound default -timeout 100
+         else 
              echo "No dirty repositories" | terminal-notifier -title "Git Status" -message "No dirty repositories" -sound default -timeout 100
          fi
     else
@@ -44,6 +47,11 @@ for dir in $DIR; do
     fi
 done
 
-echo "Dirty repositories: ${dirtyRepositories[@]}" | terminal-notifier -title "Dirty Repositories" -message "Dirty Repositories: ${dirtyRepositories[@]}" -sound default -timeout 100
+# if [ ${dirtyRepositories[@]} > 0 ]; then
+#     echo ${dirtyRepositories[@]}
+#     echo "Dirty repositories: ${dirtyRepositories[@]}" | terminal-notifier -title "Dirty Repositories" -message "Dirty Repositories: ${dirtyRepositories[@]}" -sound default -timeout 100
+# else 
+#     echo "No dirty repositories" | terminal-notifier -title "Git Status" -message "Dirty repositories" -sound default -timeout 100
+# fi
 
 cd 
