@@ -11,36 +11,39 @@ DIR=$1
 
 dirtyRepositories=()
 cleanRepositories=()
-cd
-if [ -d ~/.logs ]; then
-    echo "Logs directory exists"
-else
-    mkdir ~/.logs
-fi
+echo $cleanRepositories
+# cd
+# if [ -d ~/.logs ]; then
+#     echo "Logs directory exists"
+# else
+#     mkdir ~/.logs
+# fi
 
 for dir in $DIR; do
     if [ -d $dir ]; then
-        for repository in "$DIR*"; do
+        for repository in "$DIR"/*; do
+            
             if [ -d $repository ]; then
                 cd $repository
-                
                 if [ -d .git ]; then
+
                     echo "Checking status of $repository"
                     status=$(git status)
-
-                    if [ $status == "nothing to commit, working tree clean" ]; then
+                    if [ $status = "nothing to commit, working tree clean" ]; then
                         cleanRepositories+=($repository) #adding clean repository to array
                     else
-                        dirtyRepositories+=($repository) #adding dirty repository to array
-                        echo "$repository is dirty"
+                        dirtyRepositories+=($repository) #adding dirty repositorto array
                     fi
                 fi
+            else 
+                echo "$repository is not a directory"
             fi
          done
-         if [ ${#dirtyRepositories[0]} ]; then
-             echo "Dirty repositories: ${dirtyRepositories[0]}" | terminal-notifier -title "Git Status" -message "Dirty repositories: ${dirtyRepositories[@]}" -sound default -timeout 100
-         else 
+         echo ${#dirtyRepositories[*]}
+         if [ ${#dirtyRepositories[*]} > 0]; then
              echo "No dirty repositories" | terminal-notifier -title "Git Status" -message "No dirty repositories" -sound default -timeout 100
+         else 
+             echo "Dirty repositories: ${#dirtyRepositories}" | terminal-notifier -title "Git Status" -message "Dirty repositories: ${#dirtyRepositories[@]}" -sound default -timeout 100
          fi
     else
         echo "$dir is not a git repository"
