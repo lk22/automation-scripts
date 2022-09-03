@@ -53,23 +53,6 @@ for dir in "${repositoryDirectories[@]}"; do
             fi
         else 
             cycleThroughRepositories $dir
-            # if the directory is not a git repository, then skip it
-            for repository in "$dir"/*; do
-                if [ -d $repository ]; then
-                    cd $repository
-                    if [ -d .git ]; then
-                        echo "Git repository found"
-                        git status
-                        if [ $? -eq 0 ]; then
-                            echo "Git repository is clean"
-                            cleanRepositories+=($repository)
-                        else
-                            echo "Git repository is dirty"
-                            dirtyRepositories+=($repository)
-                        fi
-                    fi
-                fi
-            done
         fi
     fi
 done
