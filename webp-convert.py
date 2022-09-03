@@ -25,8 +25,15 @@ def convert_to_webp(source):
 def main():
     paths = Path(args.imageDir).glob("*." + args.imageExt)
     for path in paths: 
-        webp_path = convert_to_webp(path)
+        if path.is_file():
+            convert_to_webp(path)
+    
+    if( len(list(Path(args.imageDir).glob("*." + args.imageExt))) == 0 ):
+        print("No " + args.imageExt + " files found in " + args.imageDir)
+        os.system('echo "No ' + args.imageExt + ' files found in ' + args.imageDir + '" | terminal-notifier -title "Webp converter" -message "No ' + args.imageExt + ' files found in ' + args.imageDir + '"')
+    else: 
+        os.system('echo ".' + args.imageExt + ' files in ' + args.imageDir + ' Converted" | terminal-notifier -title "Webp Converter" -message "' + args.imageExt + ' files in ' + args.imageDir + ' converted"')
 
-    os.system('echo ".' + args.imageExt + ' files in ' + args.imageDir + ' Converted" | terminal-notifier -title "Webp Converter" -message "' + args.imageExt + ' files in ' + args.imageDir + ' converted"')
+
 
 main()
