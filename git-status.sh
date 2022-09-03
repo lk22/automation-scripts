@@ -17,10 +17,9 @@ repositoryDirectories=(
     "/Applications/MAMP/htdocs/dxl-v2/wp-content/plugins"
 )
 
-
 # loop through the directories and check the status of the git repository
 for dir in "${repositoryDirectories[@]}"; do
-    echo $dir
+    
     # check if the directory is a git repository
     if [ -d $dir ]; then
     
@@ -57,12 +56,18 @@ for dir in "${repositoryDirectories[@]}"; do
     fi
 done
 
-
-if [ ${dirtyRepositories[@]} > 0 ]; then
-    echo "Dirty repositories: ${dirtyRepositories[@]}" | terminal-notifier -title "Dirty Repositories" -message "Dirty Repositories: ${dirtyRepositories[@]}" -sound default -timeout 2000
-else 
-    echo "No dirty repositories" | terminal-notifier -title "Git Status" -message "Dirty repositories" -sound default -timeout 100
+if [ ${#dirtyRepositories[@]} -gt 0 ]; then
+    echo "${dirtyRepositories[@]} Dirty repositories found" | terminal-notifier -title "Git Status" -message "Dirty repositories found ${dirtyRepositories[0]}" -sound default -timeout 2000
+    echo ${dirtyRepositories[@]}
+else
+    echo "No dirty repositories found"
 fi
+
+# if [ ${dirtyRepositories[@]} > 0 ]; then
+#     echo "Dirty repositories: ${dirtyRepositories[@]}" | terminal-notifier -title "Dirty Repositories" -message "Dirty Repositories: ${dirtyRepositories[@]}" -sound default -timeout 2000
+# else 
+#     echo "No dirty repositories" | terminal-notifier -title "Git Status" -message "Dirty repositories" -sound default -timeout 100
+# fi
 
 # for dir in $DIR; do
 #     if [ -d $dir ]; then
