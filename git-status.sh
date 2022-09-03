@@ -17,6 +17,22 @@ repositoryDirectories=(
     "/Applications/MAMP/htdocs/dxl-v2/wp-content/plugins"
 )
 
+cycleThroughRepositories() {
+    for repository in "$1"; do
+        cd $repository
+        # if [ -d ".git" ]; then
+        #     # check if the repository is dirty
+        #     # if [ -n "$(git status --porcelain)" ]; then
+        #     #     # add the repository to the dirtyRepositories array
+        #     #     dirtyRepositories+=($repository)
+        #     # else
+        #     #     # add the repository to the cleanRepositories array
+        #     #     cleanRepositories+=($repository)
+        #     # fi
+        # fi
+    done
+}
+
 # loop through the directories and check the status of the git repository
 for dir in "${repositoryDirectories[@]}"; do
     
@@ -30,11 +46,13 @@ for dir in "${repositoryDirectories[@]}"; do
             if [ $? -eq 0 ]; then
                 echo "Git repository is clean"
                 cleanRepositories+=($dir)
+                cycleThroughRepositories $dir
             else
                 echo "Git repository is dirty"
                 dirtyRepositories+=($dir)
             fi
         else 
+            cycleThroughRepositories $dir
             # if the directory is not a git repository, then skip it
             for repository in "$dir"/*; do
                 if [ -d $repository ]; then
@@ -58,7 +76,6 @@ done
 
 if [ ${#dirtyRepositories[@]} -gt 0 ]; then
     echo "${dirtyRepositories[@]} Dirty repositories found" | terminal-notifier -title "Git Status" -message "Dirty repositories found ${dirtyRepositories[0]}" -sound default -timeout 2000
-    echo ${dirtyRepositories[@]}
 else
     echo "No dirty repositories found"
 fi
