@@ -1,15 +1,19 @@
 from pathlib import Path
 from PIL import Image
+import argparse
 import sys
 import os
+
+# initialize the argument parser
+parser = argparse.ArgumentParser()
+parser.add_argument("-d", "--dir", help="Directory to convert images in", dest="imageDir")
+parser.add_argument("-e", "--ext", help="Image extension to convert", dest="imageExt")
+args = parser.parse_args()
 
 # converting images found in a given directory to webp
 # this scripts takes two command line arguments
 # the first is the directory to search for images
 # the second is the extension of the images to convert
-
-imageDir = sys.argv[1]
-imageExt = sys.argv[2]
 
 def convert_to_webp(source): 
     destination = source.with_suffix(".webp")
@@ -19,10 +23,10 @@ def convert_to_webp(source):
     return destination
 
 def main():
-    paths = Path(imageDir).glob("*." + imageExt)
+    paths = Path(args.imageDir).glob("*." + args.imageExt)
     for path in paths: 
         webp_path = convert_to_webp(path)
 
-    os.system('echo ".' + imageExt + ' files in ' + imageDir + ' Converted" | terminal-notifier -title "Webp Converter" -message "' + imageExt + ' files in ' + imageDir + ' converted"')
+    os.system('echo ".' + args.imageExt + ' files in ' + args.imageDir + ' Converted" | terminal-notifier -title "Webp Converter" -message "' + args.imageExt + ' files in ' + args.imageDir + ' converted"')
 
 main()
