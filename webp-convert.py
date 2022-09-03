@@ -30,9 +30,10 @@ def main():
     
     if( len(list(Path(args.imageDir).glob("*." + args.imageExt))) == 0 ):
         print("No " + args.imageExt + " files found in " + args.imageDir)
-        os.system('echo "No ' + args.imageExt + ' files found in ' + args.imageDir + '" | terminal-notifier -title "Webp converter" -message "No ' + args.imageExt + ' files found in ' + args.imageDir + '"')
+        os.system('echo "No ' + args.imageExt + ' files found in directory ' + args.imageDir + '" | terminal-notifier -title "Webp converter" -message "No ' + args.imageExt + ' files found in directory ' + args.imageDir + '"')
     else: 
-        os.system('echo ".' + args.imageExt + ' files in ' + args.imageDir + ' Converted" | terminal-notifier -title "Webp Converter" -message "' + args.imageExt + ' files in ' + args.imageDir + ' converted"')
+        print("All " + args.imageExt + " files in directory " + args.imageDir + " converted to webp")
+        os.system('echo ".' + args.imageExt + ' files in directory ' + args.imageDir + ' Converted" | terminal-notifier -title "Webp Converter" -message "' + args.imageExt + ' files in directory ' + args.imageDir + ' converted"')
 
 
 
