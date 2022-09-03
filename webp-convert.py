@@ -35,6 +35,4 @@ def main():
         print("All " + args.imageExt + " files in directory " + args.imageDir + " converted to webp")
         os.system('echo ".' + args.imageExt + ' files in directory ' + args.imageDir + ' Converted" | terminal-notifier -title "Webp Converter" -message "' + args.imageExt + ' files in directory ' + args.imageDir + ' converted"')
 
-
-
 main()
