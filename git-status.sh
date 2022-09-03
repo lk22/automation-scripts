@@ -20,16 +20,16 @@ repositoryDirectories=(
 cycleThroughRepositories() {
     for repository in "$1"; do
         cd $repository
-        # if [ -d ".git" ]; then
-        #     # check if the repository is dirty
-        #     # if [ -n "$(git status --porcelain)" ]; then
-        #     #     # add the repository to the dirtyRepositories array
-        #     #     dirtyRepositories+=($repository)
-        #     # else
-        #     #     # add the repository to the cleanRepositories array
-        #     #     cleanRepositories+=($repository)
-        #     # fi
-        # fi
+        if [ -d ".git" ]; then
+            check if the repository is dirty
+            if [ -n "$(git status --porcelain)" ]; then
+                # add the repository to the dirtyRepositories array
+                dirtyRepositories+=($repository)
+            else
+                # add the repository to the cleanRepositories array
+                cleanRepositories+=($repository)
+            fi
+        fi
     done
 }
 
