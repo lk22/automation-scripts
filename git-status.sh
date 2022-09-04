@@ -39,7 +39,7 @@ for dir in "${repositoryDirectories[@]}"; do
     if [ -d $dir ]; then
     
         if [ -d .git ]; then
-            echo "Git repository found"
+            echo "Git repository found: $dir"
             
             git status
             # check if the repository is dirty
