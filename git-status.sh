@@ -13,7 +13,6 @@
 dirtyRepositories=()
 cleanRepositories=()
 repositoryDirectories=(
-    "/projects/",
     "/Applications/MAMP/htdocs/dxl-v2/wp-content/plugins"
 )
 
@@ -41,6 +40,7 @@ for dir in "${repositoryDirectories[@]}"; do
     
         if [ -d .git ]; then
             echo "Git repository found"
+            
             git status
             # check if the repository is dirty
             if [ $? -eq 0 ]; then
