@@ -8,4 +8,4 @@ Webp converter script that takes 2 cmd arguments
 
 This script requires newest python 3 with following packages
 pathlib2
-Pillow or PIL (Python Imaging Library)
+Pillow or PIL (Python Imaging Library) and argparse
