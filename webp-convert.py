@@ -7,6 +7,7 @@ import os
 parser = argparse.ArgumentParser()
 parser.add_argument("-d", "--dir", help="Directory to convert images in", dest="imageDir")
 parser.add_argument("-e", "--ext", help="Image extension to convert", dest="imageExt")
+parser.add_argument("-f", "--file", help="File to convert to webp", dest="imageFile")
 args = parser.parse_args()
 
 # converting images found in a given directory to webp
@@ -22,6 +23,7 @@ def convert_to_webp(source):
     return destination
 
 def main():
+    # todo - add support for converting a single file
     paths = Path(args.imageDir).glob("*." + args.imageExt)
     for path in paths: 
         if path.is_file():
